@@ -1,0 +1,27 @@
+<h2><%= mode==='create'?'New':'Edit' %> Movement</h2>
+
+<form method="POST" action="<%= mode==='create' ? '/ingredient-movements' : ('/ingredient-movements/'+row.IngredientMovementId+'?_method=PUT') %>">
+  <label>Date</label>
+  <input type="date" name="CreatedAt" value="<%= row.CreatedAt || '' %>" required>
+
+  <label>Ingredient</label>
+  <select name="IngredientId" required>
+    <% ingredients.forEach(g => { %>
+      <option value="<%= g.IngredientId %>" <%= (g.IngredientId==(row.IngredientId||''))?'selected':'' %>>
+        <%= g.IngredientName %>
+      </option>
+    <% }) %>
+  </select>
+
+  <label>Type</label>
+  <div>
+    <label><input type="radio" name="MovementType" value="I" <%= (row.MovementType||'I')==='I'?'checked':'' %>> IN</label>
+    <label><input type="radio" name="MovementType" value="O" <%= row.MovementType==='O'?'checked':'' %>> OUT</label>
+  </div>
+
+  <label>Qty</label>
+  <input type="number" step="0.01" min="0.01" name="Qty" value="<%= row.Qty || '' %>" required>
+
+  <button type="submit">Save</button>
+  <a class="btn" href="/ingredient-movements">Back</a>
+</form>

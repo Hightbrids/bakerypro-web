@@ -1,0 +1,33 @@
+<h2>Ingredients</h2>
+<div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+    <div>
+      <span class="badge">Total: <%= rows.length %></span>
+      <span class="badge warn">LOW means below reorder</span>
+    </div>
+    <a class="btn" href="/ingredients/new">+ New</a>
+  </div>
+  <table>
+    <tr>
+      <th>ID</th><th>Image</th><th>Name</th><th>Unit</th>
+      <th>Stock</th><th>Reorder</th><th>Status</th><th></th>
+    </tr>
+    <% rows.forEach(r=>{ %>
+      <tr>
+        <td><%= r.IngredientId %></td>
+        <td><img class="thumb" src="<%= (r.ImgIngredient||'/imgs/placeholder.png') %>" onerror="this.src='/imgs/placeholder.png'"></td>
+        <td><%= r.IngredientName %></td>
+        <td><%= r.IngredientUnitName %></td>
+        <td><%= r.IngredientStockQty %></td>
+        <td><%= r.IngredientReorderPoint %></td>
+        <td><span class="badge <%= r.IsLow ? 'warn' : 'ok' %>"><%= r.IsLow ? 'LOW' : 'OK' %></span></td>
+        <td style="white-space:nowrap">
+          <a class="btn ghost" href="/ingredients/<%= r.IngredientId %>/edit">Edit</a>
+          <form method="POST" action="/ingredients/<%= r.IngredientId %>?_method=DELETE" style="display:inline">
+            <button class="btn danger" onclick="return confirm('Delete this ingredient?')">Delete</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </table>
+</div>

@@ -1,0 +1,84 @@
+<!-- views/recipes/list.ejs -->
+<h2>Recipes</h2>
+
+<!-- เลือกสินค้า -->
+<div class="card">
+  <form method="GET" action="/recipes" class="form-inline" style="align-items:end; gap:12px">
+    <div style="min-width:280px">
+      <label>Product</label>
+      <select name="productId" required onchange="this.form.submit()">
+        <% (prods || []).forEach(p => { %>
+          <option value="<%= p.ProductId %>" <%= p.ProductId == productId ? 'selected' : '' %>>
+            <%= p.ProductName %>
+          </option>
+        <% }) %>
+      </select>
+    </div>
+    <noscript><button class="btn" type="submit">Load</button></noscript>
+  </form>
+</div>
+
+<!-- รายการสูตรของสินค้าที่เลือก -->
+<div class="card">
+  <h3 style="margin:0 0 10px">Lines</h3>
+
+  <table class="recipes-table">
+    <tr>
+      <th>Ingredient</th>
+      <th>QtyPerUnit</th>
+      <th></th>
+    </tr>
+
+    <% (rows || []).forEach(r => { %>
+      <tr>
+        <td>
+          <div><b><%= r.IngredientName %></b></div>
+          <div class="help" style="margin-top:2px"><%= r.IngredientUnitName %></div>
+        </td>
+
+        <!-- แสดงค่าอย่างเดียว ถ้าจะทำแก้ไขค่อยเพิ่ม input ภายหลัง -->
+        <td><%= r.QtyPerUnit %></td>
+
+        <td style="text-align:right; white-space:nowrap">
+          <form method="POST" action="/recipes/<%= r.RecipeId %>/delete" style="display:inline">
+            <input type="hidden" name="productId" value="<%= productId %>">
+            <button type="submit" class="btn danger" onclick="return confirm('Delete line?')">Delete</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+
+    <% if (!(rows && rows.length)) { %>
+      <tr>
+        <td colspan="3" class="muted">No recipe lines yet. Add one below.</td>
+      </tr>
+    <% } %>
+  </table>
+</div>
+
+<!-- เพิ่มเส้นสูตรใหม่ -->
+<div class="card">
+  <h3 style="margin:0 0 10px">Add line</h3>
+
+  <form method="POST" action="/recipes" class="add-line">
+    <input type="hidden" name="ProductId" value="<%= productId %>">
+
+    <div class="row" style="align-items:end">
+      <div>
+        <label>Ingredient</label>
+        <select name="IngredientId" required>
+          <% (ing || []).forEach(i => { %>
+            <option value="<%= i.IngredientId %>"><%= i.IngredientName %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div>
+        <label>QtyPerUnit</label>
+        <input type="number" step="0.01" min="0.01" name="QtyPerUnit" required>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-submit">Add</button>
+  </form>
+</div>

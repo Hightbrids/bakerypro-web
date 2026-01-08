@@ -1,0 +1,25 @@
+{
+  "name": "bakerypro-web",
+  "version": "1.0.0",
+  "description": "Simple CRUD web for BakeryPro (SQL Server)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "NODE_ENV=development nodemon server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-ejs-layouts": "^2.5.1",
+    "method-override": "^3.0.0",
+    "mime-types": "^3.0.1",
+    "mssql": "^10.0.2",
+    "multer": "^2.0.2",
+    "simple-git": "^3.30.0",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

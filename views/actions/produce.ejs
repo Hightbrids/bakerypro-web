@@ -1,0 +1,37 @@
+<h2>Produce</h2>
+<form method="POST" action="/produce">
+  <label>Product</label>
+  <select name="ProductId" required>
+    <% prods.forEach(p => { %>
+      <option value="<%= p.ProductId %>"><%= p.ProductName %></option>
+    <% }) %>
+  </select>
+  <label>Quantity</label>
+  <input type="number" name="Quantity" min="1" required>
+  <label>Produced Date</label>
+  <input type="date" name="ProducedDate" required>
+  <button type="submit">Produce</button>
+</form>
+
+<% if (result) { %>
+  <h3>Status: <%= result.Status %></h3>
+  <p><%= result.Message %></p>
+  <% if (result.ExpiredDate) { %>
+    <p>Expired Date: <%= new Date(result.ExpiredDate).toISOString().slice(0,10) %></p>
+  <% } %>
+<% } %>
+
+<% if (details && details.length) { %>
+  <h3>Shortages</h3>
+  <table>
+    <tr><th>IngredientId</th><th>Name</th><th>Have</th><th>Need</th></tr>
+    <% details.forEach(d => { %>
+      <tr>
+        <td><%= d.IngredientId %></td>
+        <td><%= d.IngredientName %></td>
+        <td><%= d.HaveQty %></td>
+        <td><%= d.NeedQty %></td>
+      </tr>
+    <% }) %>
+  </table>
+<% } %>

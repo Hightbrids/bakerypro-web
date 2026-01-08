@@ -1,0 +1,9 @@
+<h2><%= mode==='create'?'New':'Edit' %> Category</h2>
+<form method="POST" action="<%= mode==='create'?'/categories':'/categories/'+row.CategoryId+'?_method=PUT' %>">
+  <label>Category Name</label>
+  <input name="CategoryName" value="<%= row.CategoryName||'' %>" required maxlength="50">
+  <div style="display:flex;gap:10px;justify-content:flex-end">
+    <a class="btn ghost" href="/categories">Cancel</a>
+    <button class="btn" type="submit">Save</button>
+  </div>
+</form>

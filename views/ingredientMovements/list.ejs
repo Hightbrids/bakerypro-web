@@ -1,0 +1,55 @@
+<h2>Ingredient Movements</h2>
+<div class="card">
+  <form class="row" method="GET" action="/ingredient-movements" style="align-items:end">
+    <div>
+      <label>Ingredient</label>
+      <select name="ingredientId">
+        <option value="">-- All --</option>
+        <% ingredients.forEach(g=>{ %>
+          <option value="<%= g.IngredientId %>" <%= (filter.ingredientId==g.IngredientId)?'selected':'' %>><%= g.IngredientName %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div>
+      <label>From</label>
+      <input type="date" name="from" value="<%= filter.from %>">
+    </div>
+    <div>
+      <label>To</label>
+      <input type="date" name="to" value="<%= filter.to %>">
+    </div>
+    <div>
+      <button class="btn" type="submit">Filter</button>
+      <a class="btn ghost" href="/ingredient-movements.csv?<%= new URLSearchParams(filter).toString() %>">Export CSV</a>
+    </div>
+  </form>
+
+  <div style="display:flex;gap:12px;margin:8px 0">
+    <div class="badge">Total IN: <b><%= (sums.SumIn||0).toFixed ? sums.SumIn.toFixed(2) : sums.SumIn %></b></div>
+    <div class="badge">Total OUT: <b><%= (sums.SumOut||0).toFixed ? sums.SumOut.toFixed(2) : sums.SumOut %></b></div>
+    <div class="badge">Page <%= page %>/<%= pages %> • <%= total %> rows</div>
+  </div>
+
+  <table>
+    <tr><th>ID</th><th>Date</th><th>Ingredient</th><th>Type</th><th>Qty</th><th>Unit</th></tr>
+    <% rows.forEach(r=>{ %>
+      <tr>
+        <td><%= r.IngredientMovementId %></td>
+        <td><%= r.CreatedAt.toISOString ? r.CreatedAt.toISOString().slice(0,10) : r.CreatedAt %></td>
+        <td><%= r.IngredientName %></td>
+        <td><%= r.MovementType==='I'?'IN':'OUT' %></td>
+        <td><%= r.Qty %></td>
+        <td><%= r.IngredientUnitName %></td>
+      </tr>
+    <% }) %>
+  </table>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+    <div class="muted">Use filters to narrow results.</div>
+    <div>
+      <% const params = new URLSearchParams(filter); params.set('pageSize', pageSize); %>
+      <% if (page>1) { params.set('page', page-1); %><a class="btn ghost" href="/ingredient-movements?<%= params.toString() %>">Prev</a><% } %>
+      <% if (page<pages){ params.set('page', page+1); %><a class="btn ghost" href="/ingredient-movements?<%= params.toString() %>">Next</a><% } %>
+    </div>
+  </div>
+</div>

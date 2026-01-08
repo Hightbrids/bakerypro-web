@@ -1,0 +1,19 @@
+<h2>Refill Ingredient</h2>
+<form method="POST" action="/refill">
+  <label>Ingredient</label>
+  <select name="IngredientId" required>
+    <% ing.forEach(i => { %>
+      <option value="<%= i.IngredientId %>"><%= i.IngredientName %></option>
+    <% }) %>
+  </select>
+  <label>Qty</label>
+  <input type="number" step="0.01" name="Qty" min="0.01" required>
+  <label>Date</label>
+  <input type="date" name="CreatedAt" required>
+  <button type="submit">Refill</button>
+</form>
+
+<% if (result) { %>
+  <h3>Status: <%= result.Status %></h3>
+  <p><%= result.Message %></p>
+<% } %>

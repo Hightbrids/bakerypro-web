@@ -1,0 +1,30 @@
+<h2>Products</h2>
+<div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+    <div class="badge">Total: <%= rows.length %></div>
+    <a class="btn" href="/products/new">+ New</a>
+  </div>
+  <table>
+    <tr>
+      <th>ID</th><th>Image</th><th>Name</th><th>Category</th>
+      <th>ShelfLife</th><th>Price</th><th>Reorder</th><th></th>
+    </tr>
+    <% rows.forEach(r=>{ %>
+      <tr>
+        <td><%= r.ProductId %></td>
+        <td><img class="thumb" src="<%= (r.ImgProduct||'/imgs/placeholder.png') %>" onerror="this.src='/imgs/placeholder.png'"></td>
+        <td><%= r.ProductName %></td>
+        <td><%= r.CategoryName %></td>
+        <td><%= r.ShelfLifeDays %> d</td>
+        <td><%= r.UnitPrice %></td>
+        <td><%= r.ProductReorderPoint %></td>
+        <td style="white-space:nowrap">
+          <a class="btn ghost" href="/products/<%= r.ProductId %>/edit">Edit</a>
+          <form method="POST" action="/products/<%= r.ProductId %>?_method=DELETE" style="display:inline">
+            <button class="btn danger" onclick="return confirm('Delete this product?')">Delete</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </table>
+</div>

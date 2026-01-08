@@ -1,0 +1,3 @@
+<% if (typeof alert !== 'undefined' && alert && alert.msg) { %>
+  <div class="toast <%= alert.type || 'info' %>"><%= alert.msg %></div>
+<% } %>

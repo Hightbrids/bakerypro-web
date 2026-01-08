@@ -1,0 +1,41 @@
+<h2><%= mode==='create'?'New':'Edit' %> Product</h2>
+<form method="POST" enctype="multipart/form-data" action="<%= mode==='create'?'/products':'/products/'+row.ProductId+'?_method=PUT' %>">
+  <div class="row">
+    <div>
+      <label>Name</label>
+      <input name="ProductName" value="<%= row.ProductName||'' %>" required maxlength="50">
+    </div>
+    <div>
+      <label>Category</label>
+      <select name="CategoryId" required>
+        <% cats.forEach(c=>{ %>
+          <option value="<%= c.CategoryId %>" <%= c.CategoryId==(row.CategoryId||'')?'selected':'' %>><%= c.CategoryName %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div>
+      <label>Shelf Life (days)</label>
+      <input type="number" name="ShelfLifeDays" value="<%= row.ShelfLifeDays||0 %>" min="0" required>
+    </div>
+    <div>
+      <label>Unit Price</label>
+      <input type="number" step="0.01" name="UnitPrice" value="<%= row.UnitPrice||0 %>">
+    </div>
+    <div>
+      <label>Reorder Point</label>
+      <input type="number" name="ProductReorderPoint" value="<%= row.ProductReorderPoint||0 %>" min="0" required>
+    </div>
+    <div>
+      <label>Image file</label>
+      <input type="file" name="ImgProductFile" <%= mode==='create'?'required':'' %> accept="image/*">
+      <div class="help">Supported: JPG/PNG/WebP. Will be uploaded to GitHub repo.</div>
+    </div>
+  </div>
+  <% if (row.ImgProduct) { %>
+    <div class="preview"><img class="thumb" src="<%= row.ImgProduct %>" onerror="this.src='/imgs/placeholder.png'"></div>
+  <% } %>
+  <div style="display:flex;gap:10px;justify-content:flex-end">
+    <a class="btn ghost" href="/products">Cancel</a>
+    <button class="btn" type="submit">Save</button>
+  </div>
+</form>

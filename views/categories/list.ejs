@@ -1,0 +1,22 @@
+<h2>Categories</h2>
+<div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+    <div class="badge">Total: <%= rows.length %></div>
+    <a class="btn" href="/categories/new">+ New</a>
+  </div>
+  <table>
+    <tr><th>ID</th><th>Name</th><th></th></tr>
+    <% rows.forEach(r=>{ %>
+      <tr>
+        <td><%= r.CategoryId %></td>
+        <td><%= r.CategoryName %></td>
+        <td>
+          <a class="btn ghost" href="/categories/<%= r.CategoryId %>/edit">Edit</a>
+          <form method="POST" action="/categories/<%= r.CategoryId %>?_method=DELETE" style="display:inline">
+            <button class="btn danger" onclick="return confirm('Delete this category?')">Delete</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </table>
+</div>

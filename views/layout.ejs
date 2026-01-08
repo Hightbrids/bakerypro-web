@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BakeryPro</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/style.css" />
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand-link" href="/">🍰 <span>Bakery<span style="color:var(--primary)">Pro</span></span></a>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+      <nav class="nav">
+        <a class="nav-item" href="/">Home</a>
+        <a class="nav-item" href="/categories">Categories</a>
+        <a class="nav-item" href="/products">Products</a>
+        <a class="nav-item" href="/ingredients">Ingredients</a>
+        <a class="nav-item" href="/recipes">Recipes</a>
+        <a class="nav-item" href="/batches">Batches</a>
+        <a class="nav-item" href="/produce">Produce</a>
+        <a class="nav-item" href="/refill">Refill</a>
+        <a class="nav-item" href="/ingredient-movements">Movements</a>
+      </nav>
+      <button class="mode-toggle" title="Theme">🌓</button>
+    </div>
+  </header>
+
+  <main class="container page">
+    <%- include('partials/alert') %>
+    <%- body %>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>© <%= new Date().getFullYear() %> BakeryPro</span>
+      <span class="muted">Inventory & Recipe Tracking</span>
+    </div>
+  </footer>
+</body>
+</html>

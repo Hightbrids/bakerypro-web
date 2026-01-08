@@ -1,0 +1,33 @@
+<h2><%= mode==='create'?'New':'Edit' %> Ingredient</h2>
+<form method="POST" enctype="multipart/form-data" action="<%= mode==='create'?'/ingredients':'/ingredients/'+row.IngredientId+'?_method=PUT' %>">
+  <div class="row">
+    <div>
+      <label>Name</label>
+      <input name="IngredientName" value="<%= row.IngredientName||'' %>" required maxlength="50">
+    </div>
+    <div>
+      <label>Unit</label>
+      <input name="IngredientUnitName" value="<%= row.IngredientUnitName||'' %>" required maxlength="20">
+    </div>
+    <div>
+      <label>Stock Qty</label>
+      <input type="number" step="0.01" name="IngredientStockQty" value="<%= row.IngredientStockQty||0 %>" required>
+    </div>
+    <div>
+      <label>Reorder Point</label>
+      <input type="number" step="0.01" name="IngredientReorderPoint" value="<%= row.IngredientReorderPoint||0 %>" required>
+    </div>
+    <div>
+      <label>Image file</label>
+      <input type="file" name="ImgIngredientFile" <%= mode==='create'?'required':'' %> accept="image/*">
+      <div class="help">Will upload to GitHub and save URL.</div>
+    </div>
+  </div>
+  <% if (row.ImgIngredient) { %>
+    <div class="preview"><img class="thumb" src="<%= row.ImgIngredient %>" onerror="this.src='/imgs/placeholder.png'"></div>
+  <% } %>
+  <div style="display:flex;gap:10px;justify-content:flex-end">
+    <a class="btn ghost" href="/ingredients">Cancel</a>
+    <button class="btn" type="submit">Save</button>
+  </div>
+</form>

@@ -1,0 +1,29 @@
+<h2><%= mode==='create'?'New':'Edit' %> Recipe Row</h2>
+<form method="POST" action="<%= mode==='create'?'/recipes':'/recipes/'+row.RecipeId+'?_method=PUT' %>">
+  <div class="row">
+    <div>
+      <label>Product</label>
+      <select name="ProductId" required>
+        <% products.forEach(p=>{ %>
+          <option value="<%= p.ProductId %>" <%= p.ProductId==(row.ProductId||'')?'selected':'' %>><%= p.ProductName %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div>
+      <label>Ingredient</label>
+      <select name="IngredientId" required>
+        <% ingredients.forEach(i=>{ %>
+          <option value="<%= i.IngredientId %>" <%= i.IngredientId==(row.IngredientId||'')?'selected':'' %>><%= i.IngredientName %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div>
+      <label>Qty per Unit</label>
+      <input type="number" step="0.01" min="0.01" name="QtyPerUnit" value="<%= row.QtyPerUnit||0 %>" required>
+    </div>
+  </div>
+  <div style="display:flex;gap:10px;justify-content:flex-end">
+    <a class="btn ghost" href="/recipes">Cancel</a>
+    <button class="btn" type="submit">Save</button>
+  </div>
+</form>
